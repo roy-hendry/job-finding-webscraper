@@ -29,6 +29,9 @@ search = driver.find_element_by_id("text-input-what")
 search.send_keys(searchTerm)
 search.send_keys(Keys.RETURN)
 
+jobTitles = []
+jobEmployers = []
+jobLinks = []
 
 try:
     jobCards = WebDriverWait(driver, 10).until(
@@ -36,13 +39,36 @@ try:
     )
     titles = jobCards.find_elements_by_tag_name("span")
     for title in titles:
-        #header = title.find_element_by_xpath("//div[1]/div/div[1]/div/table[1]/tbody/tr/td/div[1]/h2/span").get_attribute("title")
-        header = title.get_attribute("title")
-        if not len(header.strip()) == 0:
-            print(header)
+        val = title.get_attribute("title")
+        if not len(val.strip()) == 0:
+            jobTitles.append(val)
+            #print(val)
+
+#Fix this, it doesn't pick up the company names (it works if they are clickable)
+    titles = jobCards.find_elements_by_tag_name("pre")
+    for title in titles:
+        val = title.get_attribute("companyName")
+        jobEmployers.append(val)
+        print(val)
+
+    titles = jobCards.find_elements_by_class_name("tapItem")
+    for title in titles:
+        val = title.get_attribute("href")
+        jobLinks.append(val)
+
+    for i in range(len(jobTitles)):
+        print("")
+        print("jobTitles: " + jobTitles[i])
+        print("jobLinks: " + jobLinks[i])
+
+    #for i in range(len(jobEmployers)):
+        #print("")
+        #print("jobEmployers: " + jobEmployers[i])
+        #print(i)
 
 finally:
-    driver.quit()
+    print("")
+    #driver.quit()
 
 """
 try:
