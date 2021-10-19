@@ -22,55 +22,58 @@ clear()
 searchTerm = input("What job would you like to search for? ")
 #searchTerm = "graduate software developer"
 
-#Go to this website
-driver.get("https://uk.indeed.com/?from=gnav-jobsearch--jasx")
+def indeedCollection():
+    #Go to this website
+    driver.get("https://uk.indeed.com/?from=gnav-jobsearch--jasx")
 
-#Find the text box and enter the type of job the user entered earlier
-search = driver.find_element_by_id("text-input-what")
-search.send_keys(searchTerm)
-search.send_keys(Keys.RETURN)
+    #Find the text box and enter the type of job the user entered earlier
+    search = driver.find_element_by_id("text-input-what")
+    search.send_keys(searchTerm)
+    search.send_keys(Keys.RETURN)
 
-#Create empty arrays of each of the types of data we want to collect about the job so we can append to them later
-jobTitles = []
-jobEmployers = []
-jobLinks = []
+    #Create empty arrays of each of the types of data we want to collect about the job so we can append to them later
+    jobTitles = []
+    jobEmployers = []
+    jobLinks = []
 
-#Try to locate the id mentioned below, if it is not found within 10 seconds then close the program
-try:
-    jobCards = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, "mosaic-provider-jobcards"))
-    )
+    #Try to locate the id mentioned below, if it is not found within 10 seconds then close the program
+    try:
+        jobCards = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "mosaic-provider-jobcards"))
+        )
 
-    #Collects all of the job titles on the page
-    elements = jobCards.find_elements_by_tag_name("span")
-    for x in elements:
-        val = x.get_attribute("title")
-        #Make sure that the empty values aren't shown
-        if not len(val.strip()) == 0:
-            jobTitles.append(val)
+        #Collects all of the job titles on the page
+        elements = jobCards.find_elements_by_tag_name("span")
+        for x in elements:
+            val = x.get_attribute("title")
+            #Make sure that the empty values aren't shown
+            if not len(val.strip()) == 0:
+                jobTitles.append(val)
 
-    #Collects all of the employers for the jobs
-    elements = jobCards.find_elements_by_class_name("companyName")
-    for x in elements:
-        val = x.text
-        jobEmployers.append(val)
+        #Collects all of the employers for the jobs
+        elements = jobCards.find_elements_by_class_name("companyName")
+        for x in elements:
+            val = x.text
+            jobEmployers.append(val)
 
-    #Collects all of the job links
-    elements = jobCards.find_elements_by_class_name("tapItem")
-    for x in elements:
-        val = x.get_attribute("href")
-        jobLinks.append(val)
+        #Collects all of the job links
+        elements = jobCards.find_elements_by_class_name("tapItem")
+        for x in elements:
+            val = x.get_attribute("href")
+            jobLinks.append(val)
 
-    #Clears the terminal
-    clear()
+        #Clears the terminal
+        clear()
 
-    #Prints all of the job titles, employers and links respectively
-    for i in range(len(jobTitles)):
-        print("")
-        print("jobTitles: " + jobTitles[i])
-        print("jobEmployers: " + jobEmployers[i])
-        print("jobLinks: " + jobLinks[i])
+        #Prints all of the job titles, employers and links respectively
+        for i in range(len(jobTitles)):
+            print("")
+            print("jobTitles: " + jobTitles[i])
+            print("jobEmployers: " + jobEmployers[i])
+            print("jobLinks: " + jobLinks[i])
 
-#After everything has been done close the program
-finally:
-    driver.quit()
+    #After everything has been done close the program
+    finally:
+        driver.quit()
+
+indeedCollection()
