@@ -4,4 +4,4 @@ A project to search through job websites and find the appropriate jobs I am sear
 
 As of current the script will obtain job information regarding: The job titles, employers of the job and the link to the page where I can apply to the job.
 
-This is all done via the first page of Indeed, in future I may implement multiple pages from Indeed or other job seeking websites.
+This is all done via the first page of Indeed, the .Gov job seeking website and reed.
