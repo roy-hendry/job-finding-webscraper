@@ -103,7 +103,6 @@ def govCollection():
             val = x.find_element_by_tag_name("a").text
             jobTitles.append(val)
 
-
         #Collects all of the employers for the jobs
         elements = jobCards.find_elements_by_class_name("search-result")
         for x in elements:
